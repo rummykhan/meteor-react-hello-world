@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import UserRow from './UserRow';
 import {createContainer} from 'meteor/react-meteor-data';
 
-import {Users} from '../../server/collections/Users';
+import {Users} from '../api/Users';
 
 class App extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class App extends Component {
                 </thead>
                 <tbody>
                 {this.props.users.map((user) => (
-                    <UserRow key={user.id} user={user}/>
+                    <UserRow key={user._id} user={user}/>
                 ))}
                 </tbody>
             </table>
@@ -41,8 +41,8 @@ class App extends Component {
 
 export default createContainer(() => {
     Meteor.subscribe('users');
-    console.log('rummykhan was here!!');
+
     return {
-        users: Users.find({})
+        users: Users.find().fetch()
     }
 }, App);

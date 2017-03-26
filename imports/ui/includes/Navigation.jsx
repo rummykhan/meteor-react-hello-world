@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 class Navigation extends Component {
     render() {
@@ -13,6 +13,7 @@ class Navigation extends Component {
                     <div className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">
                             <li><Link to="/users">Users</Link></li>
+                            <li><Link to="/users/create">Create Users</Link></li>
                         </ul>
                     </div>
 
