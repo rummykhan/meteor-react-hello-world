@@ -2,23 +2,28 @@ import {Meteor} from 'meteor/meteor';
 import React from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 
+// import guest components..
 import Guest from '../ui/guest/Guest';
 import Login from '../ui/guest/Login';
 
-import Layout from '../ui/includes/Layout';
-import App from '../ui/App';
-import Home from '../ui/Home';
-import CreateUsers from '../ui/CreateUsers';
+
+// import admin components..
+import Layout from '../ui/admin/includes/Layout';
+import App from '../ui/admin/App';
+import Home from '../ui/admin/Home';
+import CreateUsers from '../ui/admin/CreateUsers';
+import ChangePassword from '../ui/admin/auth/ChangePassword'
 
 const Routes = (
     <Router history={browserHistory}>
         <Route component={Guest} onEnter={isGuest}>
-            <Route path="/login" components={Login}/>
+            <Route path="/auth/login" components={Login}/>
         </Route>
         <Route path="/" component={Layout} onEnter={ requireAuth }>
             <IndexRoute component={Home}/>
             <Route path="/users" component={App}/>
             <Route path="/users/create" component={CreateUsers}/>
+            <Route path="/auth/change/password" component={ChangePassword}/>
             <Route path="/auth/logout" onEnter={logoutUser}/>
         </Route>
     </Router>
@@ -27,7 +32,7 @@ const Routes = (
 function requireAuth(nextState, replace) {
     if (!Meteor.userId()) {
         replace({
-            pathname: '/login',
+            pathname: '/auth/login',
             state: {nextPathname: nextState.location.pathname},
         })
     }
@@ -44,7 +49,7 @@ function isGuest(nextState, replace) {
 function logoutUser(nextState, replace) {
     Meteor.logout();
     replace({
-        pathname: '/login'
+        pathname: '/auth/login'
     });
 }
 
