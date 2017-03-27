@@ -1,4 +1,4 @@
-import { Meteor } from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import React from 'react';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 
@@ -12,26 +12,40 @@ import CreateUsers from '../ui/CreateUsers';
 
 const Routes = (
     <Router history={browserHistory}>
-        <Route component={Guest}>
+        <Route component={Guest} onEnter={isGuest}>
             <Route path="/login" components={Login}/>
         </Route>
         <Route path="/" component={Layout} onEnter={ requireAuth }>
             <IndexRoute component={Home}/>
             <Route path="/users" component={App}/>
             <Route path="/users/create" component={CreateUsers}/>
+            <Route path="/auth/logout" onEnter={logoutUser}/>
         </Route>
     </Router>
 );
 
 function requireAuth(nextState, replace) {
-
-    console.log(Meteor.user());
-    /*if (!Meteor.userId()) {
+    if (!Meteor.userId()) {
         replace({
             pathname: '/login',
-            state: { nextPathname: nextState.location.pathname },
+            state: {nextPathname: nextState.location.pathname},
         })
-    }*/
+    }
+}
+
+function isGuest(nextState, replace) {
+    if (Meteor.userId()) {
+        replace({
+            pathname: '/users'
+        });
+    }
+}
+
+function logoutUser(nextState, replace) {
+    Meteor.logout();
+    replace({
+        pathname: '/login'
+    });
 }
 
 
