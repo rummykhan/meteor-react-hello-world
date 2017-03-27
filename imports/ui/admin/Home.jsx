@@ -5,7 +5,7 @@ class Home extends Component{
     render(){
         return (
             <div className="alert alert-success">
-                <li>Welcome User..</li>
+                <li>Welcome to Meteor and React JS basic implementation..</li>
             </div>
         )
     }
