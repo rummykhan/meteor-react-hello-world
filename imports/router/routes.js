@@ -21,8 +21,8 @@ const Routes = (
         </Route>
         <Route path="/" component={Layout} onEnter={ requireAuth }>
             <IndexRoute component={Home}/>
-            <Route path="/users" component={App}/>
-            <Route path="/users/create" component={CreateUsers}/>
+            <Route path="/tasks" component={App}/>
+            <Route path="/tasks/create" component={CreateUsers}/>
             <Route path="/auth/change/password" component={ChangePassword}/>
             <Route path="/auth/logout" onEnter={logoutUser}/>
         </Route>

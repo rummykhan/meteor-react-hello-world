@@ -21,8 +21,8 @@ class Navigation extends Component {
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-haspopup="true" aria-expanded="false">Users <span className="caret"/></a>
                                 <ul className="dropdown-menu">
-                                    <li><Link to="/users">Users</Link></li>
-                                    <li><Link to="/users/create">Create Users</Link></li>
+                                    <li><Link to="/tasks">Tasks</Link></li>
+                                    <li><Link to="/tasks/create">Create Tasks</Link></li>
                                 </ul>
                             </li>
                         </ul>

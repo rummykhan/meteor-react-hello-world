@@ -1,11 +1,25 @@
 import {Meteor} from 'meteor/meteor';
 import React, {Component} from 'react';
-import UserRow from './UserRow';
+import TaskRow from './TaskRow';
 import {createContainer} from 'meteor/react-meteor-data';
+
+import {Tasks} from '../../api/collections/Tasks';
 
 class App extends Component {
     constructor(props) {
         super(props);
+        this.onEdit = this.onEdit.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+
+    onEdit(e, task) {
+        console.log(task);
+    }
+
+    onDelete(e, task) {
+        if (confirm('Are you sure')) {
+            Meteor.call('tasks.remove', task._id);
+        }
     }
 
     renderUsers() {
@@ -14,13 +28,13 @@ class App extends Component {
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Age</th>
+                    <th>Title</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.users.map((user) => (
-                    <UserRow key={user._id} user={user}/>
+                {this.props.tasks.map((task) => (
+                    <TaskRow key={task._id} task={task} onEdit={this.onEdit} onDelete={this.onDelete}/>
                 ))}
                 </tbody>
             </table>
@@ -38,7 +52,9 @@ class App extends Component {
 }
 
 export default createContainer(() => {
+    Meteor.subscribe('tasks');
+
     return {
-        users: []
+        tasks: Tasks.find().fetch()
     }
 }, App);
